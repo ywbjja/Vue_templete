@@ -1,4 +1,4 @@
-# 这个是一个简单的整合了Sping Boot+Spring Security +JWT的模板
+# 这个是一个简单的整合了Sping Boot+Spring Security +JWT的模板,如果觉得不错，麻烦点个Star为我~
 
 
 # Getting started
