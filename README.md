@@ -12,3 +12,6 @@ npm install
 # develop
 npm run dev
 ```
+
+# Spring Templete
+https://github.com/ywbjja/springSecurity-jwt-vue-temple
