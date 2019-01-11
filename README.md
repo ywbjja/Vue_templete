@@ -4,7 +4,7 @@
 # Getting started
 ```
 # clone the project
-git clone https://github.com/ywbjja/vue_templete.git
+git clone https://github.com/ywbjja/Vue_templete.git
 
 # install dependency
 npm install
