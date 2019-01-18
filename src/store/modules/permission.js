@@ -1,31 +1,5 @@
-// store/permission.js
-import { asyncRouterMap, constantRouterMap } from '@/router'
-
-/**
- *
- * @param  {Array} userRouter 后台接口请求的路由
- * @param  {Array} allRouter  配置的路由的
- * @return {Array} userRealRouters 过滤后的路由
- */
-
-export function userCurrentRouter(userRouter = [], allRouter = []) {
-  var userRealRouters = []
-  for (const router of allRouter) {
-    for (const item of userRouter) {
-      // 拿用户的路由和配置路由进行匹配判断
-      if (item.per_resource === router.meta.resources) {
-        // 对路由下的子路由进行判断，递归添加
-        if (item.children && item.children.length > 0) {
-          router.children = userCurrentRouter(item.children, router.children)
-        }
-        // 这里是设置侧边栏的显示title还可以显示图标(没做)
-        router.meta.title = item.per_name
-        userRealRouters.push(router)
-      }
-    }
-  }
-  return userRealRouters
-}
+import { constantRouterMap } from '@/router'
+import Layout from '@/views/layout/Layout'
 const permission = {
   state: {
     routers: constantRouterMap,
@@ -40,11 +14,34 @@ const permission = {
   actions: {
     GenerateRoutes({ commit }, data) {
       return new Promise(resolve => {
-        commit('SET_ROUTERS', userCurrentRouter(data, asyncRouterMap))
+        commit('SET_ROUTERS', data)
         resolve()
       })
     }
   }
+}
+
+export const filterAsyncRouter = (routers) => { // 遍历后台传来的路由字符串，转换为组件对象
+  const backAsyncRouter = routers.filter(router => {
+    if (router.component) {
+      // Layout布局特殊处理
+      if (router.component === 'Layout') {
+        router.component = Layout
+      } else {
+        const component = router.component
+        router.component = loadView(component)
+      }
+    }
+    if (router.children && router.children.length > 0) {
+      router.children = filterAsyncRouter(router.children)
+    }
+    return true
+  })
+  return backAsyncRouter
+}
+
+export const loadView = (view) => { // 路由懒加载
+  return () => import(`@/views/${view}`)
 }
 
 export default permission

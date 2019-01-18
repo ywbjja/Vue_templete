@@ -4,6 +4,7 @@ import NProgress from 'nprogress' // Progress 进度条
 import 'nprogress/nprogress.css'// Progress 进度条样式
 import { Message } from 'element-ui'
 import { getToken } from '@/utils/auth' // 验权
+import { filterAsyncRouter } from './store/modules/permission'
 
 const whiteList = ['/login'] // 不重定向白名单
 router.beforeEach((to, from, next) => {
@@ -16,7 +17,9 @@ router.beforeEach((to, from, next) => {
       if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
         store.dispatch('GetInfo').then(res => {
           // 生成可访问的路由表
-          store.dispatch('GenerateRoutes', store.getters.menus).then(r => {
+          const asyncRouter = filterAsyncRouter(res.data.menus)
+          asyncRouter.push({ path: '*', redirect: '/404', hidden: true })
+          store.dispatch('GenerateRoutes', asyncRouter).then(r => {
             // 动态添加可访问路由表
             router.addRoutes(store.getters.apiRouters)
             next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record

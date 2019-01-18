@@ -51,11 +51,6 @@ export const constantRouterMap = [
       component: () =>
         import('@/views/dashboard/userinfo')
     }]
-  },
-  {
-    path: '*',
-    redirect: '/404',
-    hidden: true
   }
 ]
 
@@ -64,43 +59,3 @@ export default new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })
-// 异步挂载的路由
-// 动态需要根据权限加载的路由表
-export const asyncRouterMap = [
-  {
-    path: '/auth',
-    component: Layout,
-    name: 'auth',
-    meta: {
-      resources: 'auth',
-      title: '权限管理'
-    },
-    children: [
-      {
-        path: 'per',
-        component: () => import('@/views/pre/perm/index'),
-        name: 'per',
-        meta: {
-          resources: 'per'
-        }
-      },
-      {
-        path: 'user',
-        component: () => import('@/views/pre/user/index'),
-        name: 'user',
-        meta: {
-          resources: 'user'
-        }
-      },
-      {
-        path: 'role',
-        component: () => import('@/views/pre/role/index'),
-        name: 'role',
-        meta: {
-          resources: 'role'
-        }
-      }
-    ]
-  }
-]
-
