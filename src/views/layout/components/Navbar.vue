@@ -4,11 +4,15 @@
     <breadcrumb />
     <el-dropdown class="avatar-container" trigger="click">
       <div class="avatar-wrapper">
+        
         <img src="/static/img/favicon.png" class="user-avatar">
         <i class="el-icon-caret-bottom"/>
       </div>
       <el-dropdown-menu slot="dropdown" class="user-dropdown">
         <router-link class="inlineBlock" to="/">
+        <el-dropdown-item>
+            用户：{{ username }}
+          </el-dropdown-item>
           <el-dropdown-item>
             Home
           </el-dropdown-item>
@@ -33,7 +37,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'sidebar'
+      'sidebar',
+      'username'
     ])
   },
   methods: {
