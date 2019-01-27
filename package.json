@@ -1,9 +1,9 @@
 {
-  "name": "vue-admin-template",
+  "name": "vue-simple-template",
   "version": "3.8.0",
   "license": "MIT",
   "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
-  "author": "Pan <panfree23@gmail.com>",
+  "author": "ywbjja <ywbjja@gmail.com>",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
@@ -14,6 +14,7 @@
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml"
   },
   "dependencies": {
+    "@riophae/vue-treeselect": "0.0.38",
     "axios": "0.18.0",
     "element-ui": "2.4.6",
     "js-cookie": "2.2.0",
