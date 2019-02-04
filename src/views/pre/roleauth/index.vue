@@ -84,6 +84,9 @@ export default {
         //   console.log(item)
         //   this.$refs.tree.setChecked(item,true,false)
         // })
+        const m = JSON.stringify(this.dataArr)
+        for(let i = 0; i< this.perIds.length;i++){
+        }
         this.$refs.tree.setCheckedKeys(this.perIds)
       })
     },

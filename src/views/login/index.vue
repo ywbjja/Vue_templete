@@ -41,6 +41,7 @@
 
 <script>
 // import { isvalidUsername } from '@/utils/validate'
+import { Decrypt, Encrypt } from '@/utils/encoder'
 
 export default {
   name: 'Login',
@@ -93,6 +94,9 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
+          var encoderStr = Encrypt(this.loginForm.password)
+          // console.log('解密:'+Decrypt(encoderStr))
+          this.loginForm.password = encoderStr
           this.$store.dispatch('Login', this.loginForm).then(() => {
             this.loading = false
             this.$router.push({ path: this.redirect || '/' })

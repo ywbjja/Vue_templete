@@ -44,7 +44,6 @@ export const constantRouterMap = [
     component: () => import('@/views/errorPage/401'),
     hidden: true
   },
-
   {
     path: '/',
     component: Layout,
@@ -59,6 +58,16 @@ export const constantRouterMap = [
       component: () =>
         import('@/views/dashboard/index')
     }]
+  },
+  {
+    path: 'external-link',
+    component: Layout,
+    children: [
+      {
+        path: 'http://127.0.0.1:8086/druid/sql.html',
+        meta: { 'title': 'SQL监控', 'icon': 'link' }
+      }
+    ]
   }
 ]
 
