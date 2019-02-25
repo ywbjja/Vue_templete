@@ -30,9 +30,9 @@ export function add(data) {
   })
 }
 
-export function del(id) {
+export function del(per_id) {
   return request({
-    url: 'api/menus/' + id,
+    url: '/menus/' + per_id,
     method: 'delete'
   })
 }

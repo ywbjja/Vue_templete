@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
 import store from '../store'
-import { getToken } from '@/utils/auth'
+import { getToken, setToken } from '@/utils/auth'
+import router from '@/router'
 
 // 创建axios实例
 const service = axios.create({
@@ -27,6 +28,9 @@ service.interceptors.request.use(
 // response 拦截器
 service.interceptors.response.use(
   response => {
+    if(response.headers.newtoken){
+      setToken(response.headers.newtoken)
+    }
     /**
      * code为非200是抛错 可结合自己业务进行修改
      */
@@ -54,19 +58,17 @@ service.interceptors.response.use(
           })
         })
       }
+      if(res.code === 401){
+        setToken('')
+        router.push("/login") /*直接跳转，不给程序处理*/
+      }
       return Promise.reject('error')
     } else {
       return response.data
     }
   },
   error => {
-    console.log('err' + error) // for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
-    return Promise.reject(error)
+    return Promise.reject('服务不可用，请重新再试');
   }
 )
 

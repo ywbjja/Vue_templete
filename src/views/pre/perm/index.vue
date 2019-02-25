@@ -30,10 +30,10 @@
             width="180">
             <p>确定删除本条数据吗？</p>
             <div style="text-align: right; margin: 0">
-              <el-button size="mini" type="text" @click="$refs[scope.row.id].doClose()">取消</el-button>
-              <el-button :loading="delLoading" type="primary" size="mini" @click="subDelete(scope.row.id)">确定</el-button>
+              <el-button size="mini" type="text" @click="$refs[scope.row.per_id].doClose()">取消</el-button>
+              <el-button :loading="delLoading" type="primary" size="mini" @click="subDelete(scope.row.per_id)">确定</el-button>
             </div>
-            <el-button slot="reference" :disabled="scope.row.per_id === 1" type="danger" size="mini">删除</el-button>
+            <el-button slot="reference"  type="danger" size="mini">删除</el-button>
           </el-popover>
         </template>
       </el-table-column>
@@ -46,7 +46,7 @@ import treeTable from '@/components/TreeTable'
 import hasPermission from '@/utils/permission'
 import tableData from '@/utils/tableData'
 import { parseTime } from '@/utils'
-import { getMenusTree } from '@/api/menu'
+import { getMenusTree, del} from '@/api/menu'
 import edit from './edit'
 import eHeader from './header'
 export default {
@@ -91,6 +91,23 @@ export default {
         const menu = { id: 0, label: '根目录', children: [] }
         menu.children = res.data
         this.menus.push(menu)
+      })
+    },
+    subDelete(per_id){
+      this.delLoading = true
+      del(per_id).then(res => {
+        this.delLoading = false
+        this.$refs[per_id].doClose()
+        this.init()
+        this.$notify({
+          title: '删除成功',
+          type: 'success',
+          duration: 2500
+        })
+      }).catch(err => {
+        this.delLoading = false
+        this.$refs[per_id].doClose()
+        console.log(err.response.data.message)
       })
     }
     // getRoles() {

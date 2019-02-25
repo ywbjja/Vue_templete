@@ -23,6 +23,7 @@
           <svg-icon icon-class="eye" />
         </span>
       </el-form-item>
+      <!-- <el-checkbox v-model="checked" name="remember-me">下次免登录</el-checkbox> -->
       <el-form-item>
         <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
           Sign in
@@ -149,13 +150,13 @@ $light_gray:#eee;
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 $bg:#2d3a4b;
-$dark_gray:#889aa4;
 $light_gray:#eee;
+$dark_gray:#889aa4;
 .login-container {
   position: fixed;
   height: 100%;
   width: 100%;
-  background-color: $bg;
+  background : #f0f2f5 url('../../assets/background.svg') no-repeat;
   .login-form {
     position: absolute;
     left: 0;
@@ -167,7 +168,7 @@ $light_gray:#eee;
   }
   .tips {
     font-size: 14px;
-    color: #fff;
+    color: #29d;
     margin-bottom: 10px;
     span {
       &:first-of-type {
@@ -185,7 +186,7 @@ $light_gray:#eee;
   .title {
     font-size: 26px;
     font-weight: 400;
-    color: $light_gray;
+    color: #29d;
     margin: 0px auto 40px auto;
     text-align: center;
     font-weight: bold;

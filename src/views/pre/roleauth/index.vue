@@ -92,7 +92,6 @@ export default {
     },
     getCheckedKeys() {
       this.checkIds = this.$refs.tree.getCheckedKeys().concat(this.$refs.tree.getHalfCheckedKeys())
-      console.log(this.checkIds)
       var data = {
         rp_role_id: this.roleActiveNum,
         checkIds: this.checkIds

@@ -24,3 +24,26 @@ export function getPerIdList(data) {
     data
   })
 }
+
+export function add(data) {
+  return request({
+    url: '/roles',
+    method: 'post',
+    data
+  })
+}
+
+export function edit(data) {
+  return request({
+    url: '/roles',
+    method: 'put',
+    data
+  })
+}
+
+export function del(id) {
+  return request({
+    url: '/roles/' + id,
+    method: 'delete'
+  })
+}

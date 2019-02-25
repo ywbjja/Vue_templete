@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <eHeader :query="query"/>
     <!--表格渲染-->
     <el-table v-loading="loading" :data="dataArr" size="small" border style="width: 100%;">
       <el-table-column prop="rolename" label="角色名称"/>
@@ -11,6 +12,7 @@
       </el-table-column>
       <el-table-column label="操作" width="150px" align="center">
         <template slot-scope="scope">
+          <edit v-if="hasPermission(['ROLE_ADMIN'])"  :data="scope.row" :sup_this="sup_this"/>
           <el-popover
             v-if="hasPermission(['ROLE_ADMIN'])"
             :ref="scope.row.id"
@@ -37,11 +39,14 @@
 </template>
 
 <script>
-
 import hasPermission from '@/utils/permission'
 import initData from '@/utils/initData'
 import { parseTime } from '@/utils'
+import { del } from '@/api/role'
+import edit from './edit'
+import eHeader from './header'
 export default {
+  components: { edit, eHeader },
   mixins: [initData],
   data() {
     return {
@@ -71,6 +76,23 @@ export default {
       this.data = { curPageNum: this.pageParams.curPageNum, pageSize: this.pageParams.pageSize }
       if (value) { this.pageParams['name'] = value }
       return true
+    },
+    subDelete(id){
+      this.delLoading = true
+      del(id).then(res => {
+        this.delLoading = false
+        this.$refs[id].doClose()
+        this.init()
+        this.$notify({
+          title: '删除成功',
+          type: 'success',
+          duration: 2500
+        })
+      }).catch(err => {
+        this.delLoading = false
+        this.$refs[per_id].doClose()
+        console.log(err.response.data.message)
+      })
     }
   }
 }
