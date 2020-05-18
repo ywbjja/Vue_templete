@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@riophae/vue-treeselect": "0.0.38",
-    "axios": "0.18.0",
+    "axios": "0.19.2",
     "crypto-js": "^3.1.9-1",
     "element-ui": "2.4.6",
     "js-cookie": "2.2.0",
